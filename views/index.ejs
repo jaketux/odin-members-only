@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clubhouse</title>
+  </head>
+  <body>
+    <h1>Welcome to the Clubhouse!</h1>
+    <% if (!locals.signedIn) { %>
+    <h2>You are not signed in.</h2>
+    <a href="/log-in">Click here to log in to the Clubhouse.</a><br /><br />
+
+    <a href="/sign-up">Click here to sign up to the Clubhouse.</a><br /><br />
+    <h2>Anonymous Messages</h2>
+    <% if (locals.messages.length > 0) { %> <% messages.forEach((message) => {
+    %>
+    <div style="width: 400px; word-wrap: break-word">
+      <div>Message: <%= message.message %></div>
+      <div>
+        Time of Message: <%= new Date(message.time).toLocaleString('en-AU') %>
+      </div>
+    </div>
+    <br />
+    <br />
+
+    <% }) %> <% } else { %>
+    <div>There are currently no messages to display.</div>
+    <br /><br />
+    <%}%> <%} else if (locals.signedIn) { %>
+    <h2>Welcome back <%= user.username %></h2>
+    <h2>
+      <% if(user && user.member_status) {%> Member Status: Yes <% } else {%>
+      Member Status: No <%}%>
+    </h2>
+    <h2>
+      <% if(user && user.admin) {%> Admin Status: Yes <% } else {%> Admin
+      Status: No<%}%>
+    </h2>
+    <h3>User Messages</h3>
+    <% if (locals.messages.length > 0) { %> <% messages.forEach((message) => {
+    %>
+    <div style="width: 400px; word-wrap: break-word">
+      <div>Message: <%= message.message %></div>
+
+      <%if (user.member_status) {%>
+      <div>
+        Time of Message: <%= new Date(message.time).toLocaleString('en-AU') %>
+      </div>
+      <div>Username: <%= message.user_name %></div>
+      <div>Name: <%= message.first_name %> <%= message.last_name %></div>
+      <%}%>
+    </div>
+    <br />
+    <% if (user.admin) { %>
+    <form action="/<%=message.message_id%>/delete-msg" method="POST">
+      <button type="submit">Delete message</button>
+    </form>
+    <br />
+    <% } %> <% }) %> <% if (!user.member_status) { %>
+    <a href="/join-club">Click here to upgrade to Member.</a><br />
+    <%}%> <% } else { %>
+    <div>There are currently no messages to display.</div>
+    <br />
+    <a href="/new-message">Click here to write a new message.</a><br />
+    <% if (!user.member_status) { %>
+    <br /><br /><a href="/join-club">Click here to upgrade to Member.</a
+    ><br /><br />
+    <%}%> <%}%>
+    <br /><a href="/log-out">Click here to log out.</a>
+    <% } %>
+  </body>
+</html>

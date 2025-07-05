@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clubhouse</title>
+  </head>
+  <body>
+    <h1><%=title%></h1>
+    <div><%=text%></div>
+    <br /><br />
+    <form action="/log-in" method="POST">
+      <label for="username">Username: </label>
+      <input type="text" name="username" id="username" />
+      <label for="password">Password: </label>
+      <input type="password" name="password" id="password" />
+      <button type="submit">Submit</button>
+    </form>
+    <br /><br />
+    <%if (locals.errors && errors.length>0) {%> <%errors.forEach((error)=>{%>
+    <div><%=error.msg%></div>
+    <%})%> <%}%><br /><br />
+    <a href="/">Click here to return to Home.</a>
+  </body>
+</html>

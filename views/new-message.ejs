@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clubhouse</title>
+  </head>
+  <body>
+    <% if (locals.user) { %>
+    <h1><%= title %></h1>
+    <form action="/new-message" method="post">
+      <label for="message"><%= text %></label><br />
+      <textarea
+        name="message"
+        id="message"
+        style="width: 500px; height: 250px"
+        required
+      ></textarea
+      ><br />
+      <button type="submit">Submit</button>
+    </form>
+    <br /><br />
+    <%if (locals.errors && errors.length > 0) {%> <%errors.forEach((error)=>{%>
+    <div><%=error.msg%></div>
+    <%})%> <%}%>
+    <br /><br />
+
+    <%} else if (!locals.user) {%>
+    <h2>You are not currently logged in.</h2>
+    <a href="/log-in">Click here to log in</a>
+    <%}%><br /><br />
+
+    <a href="/">Back to Home</a>
+  </body>
+</html>

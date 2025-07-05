@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clubhouse</title>
+  </head>
+  <body>
+    <%if (user) {%>
+    <h1>Join as a member!</h1>
+    <div>
+      Members are able to see the time and author of messages in the clubhouse.
+    </div>
+    <br />
+    <form action="/<%=user.id%>/join-club" method="post">
+      <label for="joinclub"
+        >To join as a member, you must enter the secret code below:</label
+      ><br /><br />
+      <input type="text" name="joinclub" id="joinclub" required /><br /><br />
+      <button type="submit">Submit</button>
+    </form>
+    <br />
+    <%if (locals.errors && errors.length>0) {%> <%errors.forEach((error)=>{%>
+    <div><%=error.msg%></div>
+    <%})%><%}%> <%} else {%>
+    <h1>You are not signed in.</h1>
+    <a href="/log-in">Click here to log in.</a><br /><br />
+    <a href="/">Click here to return to Home.</a>
+
+    <%}%>
+  </body>
+</html>
